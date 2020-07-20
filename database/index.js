@@ -2,13 +2,15 @@ const mongoose = require("mongoose"); //inclode mongoose in our page
 
 //connection to mongodb
 mongoose
-  .connect("mongodb://localhost:27017/booksDB", { useNewUrlParser: true })
-  .then(() => {
-    console.log(" The connecting is good :) ");
-  })
-  .catch((err) => {
-    console.log(" Err when conecting To DataBase :( ", err);
-  });
+var MONGODB_URI ="mongodb+srv://djayyab:doaa123@cluster0.sbk85.mongodb.net/booksDB" 
+
+const db = mongoose.connect(MONGODB_URI ||'mongodb://localhost/booksDB', { useUnifiedTopology: true, useNewUrlParser: true }).then(()=>{
+    console.log("connected!")
+})
+.catch((err)=>{
+    
+    console.log("Error while connecting to DB",err);
+})
 //schema about book info
 let booksSchema = mongoose.Schema({
  title: { type: String },
