@@ -12,34 +12,40 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/../public"));
 
-const db = require("../database");
-const read = require("../database/read");
-const log = require("../database/login.js");
+// const db = require("../database");
+// const read = require("../database/read");
+// const log = require("../database/login.js");
 const reg = require("../database/register");
-let BooksModel = db.BooksModel;
-let loginModel = log.loginModel;
+// let BooksModel = db.BooksModel;
+// let loginModel = log.loginModel;
 let RegModel = reg.RegModel;
-let ReadModel = read.ReadModel;
+// let ReadModel = read.ReadModel;
 
 //take the data of the book that i seach about it and put in favorit list
-app.post("/book", (req, res) => { 
-  const { title, author, dateOfPublication , img} = req.body;
-  
-  let bookDocumentation = new BooksModel({
-    title,
-    author,
-    dateOfPublication,
-    img,
-  });
-  bookDocumentation
-    .save()
-    .then(() => res.status(201).send("saved"))
-    .catch((err) => res.status(500).send(err + "err"));
+/////ADD BOOK IN USER ////////////////////EDIT TO DO THAT
+
+router.post('/book/:tid/user',  (req, res) => { 
+  RegModel.findOneAndUpdate()
+
 });
+// app.post("/book", (req, res) => { 
+//   const { title, author, dateOfPublication , img} = req.body;
+  
+//   let bookDocumentation = new BooksModel({
+//     title,
+//     author,
+//     dateOfPublication,
+//     img,
+//   });
+//   bookDocumentation
+//     .save()
+//     .then(() => res.status(201).send("saved"))
+//     .catch((err) => res.status(500).send(err + "err"));
+// });
 
 //offer for me all the data in farovite -show the favorite  list
-app.get("/favorite", (req, res) => {
-  BooksModel.find({})
+app.get("favorite", (req, res) => {
+  RegModel.find({books})
     .then((result) => {
       res.send(result);
       console.log(result);
@@ -50,32 +56,34 @@ app.get("/favorite", (req, res) => {
 }); 
 
 //add to readlater lit
-app.post("/readbook", (req, res) => { 
+////SAME LINES 24 >>>>> 40/////////////
 
-  const { title, dateOfPublication , img } = req.body;
+// app.post("/readbook", (req, res) => { 
+
+//   const { title, dateOfPublication , img } = req.body;
   
-  let readDoc = new ReadModel({
-    title,
-    dateOfPublication,
-    img,
-  });
- readDoc
-    .save()
-    .then(() => res.status(201).send("saved"))
-    .catch((err) => res.status(500).send(err + "err"));
-});
+//   let readDoc = new ReadModel({
+//     title,
+//     dateOfPublication,
+//     img,
+//   });
+//  readDoc
+//     .save()
+//     .then(() => res.status(201).send("saved"))
+//     .catch((err) => res.status(500).send(err + "err"));
+// });
 
 //offer the read list 
-app.get("/readlater", (req, res) => {
-  ReadModel.find({})
-    .then((result) => {
-      res.send(result);
-      console.log(result);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
-});
+// app.get("/readlater", (req, res) => {
+//   ReadModel.find({})
+//     .then((result) => {
+//       res.send(result);
+//       console.log(result);
+//     })
+//     .catch((err) => {
+//       res.send(err);
+//     });
+// });
 
 // it inside favorite list through it i can delete whet i'm saved inside the list
 app.delete('/removeOne',function(req,res){
@@ -100,13 +108,22 @@ app.delete('/removeread',function(req,res){
 
 //for all users infos
 app.post('/register', (req, res) => {
-
-  const { FirstName, LastName, Email, Password } = req.body;
-  let regDocumentation = new RegModel({ FirstName, LastName, Email, Password });
-
-  regDocumentation.save().then(() =>
-      res.status(201).send("created"))
-      .catch((err) => res.status(500).send(err + "err"))
+ 
+  const { FirstName, LastName, Email, Password ,books} = req.body;
+  // var reqUser = RegModel.findOne({Email:Email});
+  // if(reqUser){
+  //   res.send("Done")
+  // }
+  // else{
+  const regDocumentation = new RegModel({FirstName, LastName, Email, Password,books});
+   regDocumentation.save().then((response)=>{
+      res.send("created")
+  })
+  .catch((err)=>{
+      res.send(err)
+  })
+// }
+  
 });
 
 //take from regster and give me the ability to sign to main screen
