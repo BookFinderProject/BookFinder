@@ -30,7 +30,10 @@ class SearchBooks extends React.Component {
     axios
       .get(`https://www.googleapis.com/books/v1/volumes?q=` + this.state.input)
       .then((result) => {
+        
+        console.log("test",result.data.items)
         const resultArray = result.data.items;
+        
         this.setState({ title: resultArray });
         this.setState({ input: '' });
       })

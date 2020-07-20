@@ -60,7 +60,7 @@ class Showone extends React.Component {
                         console.log(data);
                         //add one element to favorite list
                         axios
-                          .post('http://localhost:5000/book', data)
+                          .post('http://localhost:5000/book/:Email', data)
                           .then((res) => {
                             console.log(res.data);
                           })

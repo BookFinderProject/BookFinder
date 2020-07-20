@@ -10,12 +10,15 @@ mongoose
   });
 
   let booksSchema = mongoose.Schema({
+    email:{type:String},
     title: { type: String },
     author:[{
        type:String,
    }],
     dateOfPublication: { type: String },
      img: { type: String },
+     link:{type:String},
+     date:{type:Date ,default:Date.now}
     
    });
     
@@ -23,10 +26,14 @@ const RegSchema = mongoose.Schema({
   FirstName: { type: String },
   LastName: { type: String },
   Email: { type: String, required: true, unique: true },
-  Password: { type: String },
-  books:[booksSchema]
+  Password: { type: String ,required: true}
+ 
 });
 
 let RegModel = mongoose.model('users', RegSchema);
+let BookModel = mongoose.model('books', booksSchema);
+
 
 module.exports.RegModel = RegModel;
+module.exports.BookModel = BookModel;
+
