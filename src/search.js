@@ -56,12 +56,7 @@ class SearchBooks extends React.Component {
           <Link to='/auth/Fav' class='right'>
             <button class='zer'> Favorite </button>
           </Link>
-
-          {/* switch to read later list */}
-          <Link to='/auth/read' class='right'>
-            <button class='zer'> Read later </button>
-          </Link>
-        </div>
+           </div>
 
         <div class='buttonIn'>
           <button

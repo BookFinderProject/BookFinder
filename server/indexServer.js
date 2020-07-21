@@ -62,11 +62,8 @@ app.post('/register', (req, res) => {
    const { FirstName, LastName, Email, Password } = req.body;
    const regDocumentation = new RegModel({FirstName, LastName, Email, Password});
    RegModel.find({Email:req.body.Email})
-   .then((user)=>{
-    
-     bcrypt.hash(req.body.Password , 10 , (err,hash)=>{
-      regDocumentation.Password = hash
-      regDocumentation.save()
+   .then((user)=>{  
+          regDocumentation.save()
       .then(()=>{
         res.send("created")
       })
@@ -75,40 +72,33 @@ app.post('/register', (req, res) => {
       })
      })
     
-   })
+
     .catch((err)=>{
       console.log("Data Erorr");
     })
 });
 
 ///////////////////////////Done//////////
-app.post('/login', (req, res) => {
-  RegModel.findOne({
-      Email: req.body.Email
-  })
-      .then(user => {
-        
-              if (bcrypt.compareSync(req.body.Password, user.Password)) {
-                  const payload = {
-                      Email: user.Email,
-                      _id: user._id,
-                      FirstName: user.FirstName,
-                      LastName: user.LastName,
-                  }
-                   let token = jwt.sign(payload, process.env.SECRET_KEY, {
-                     expiresIn: 1440
-                  })
-                  res.send(token)
-              } else {
-                  res.json({ error: 'User does not exist' })
-              }
-          
-      })
-      .catch(err => {
-          res.send('error: ' + err)
-      })
-})
+app.get('/login/:Email/:Password', (req, res) => {
 
+  const { Email, Password } = req.params;
+
+  var email = req.body.Email;
+  var password = req.body.Password;
+
+  RegModel.find({ Email, Password })
+      .then((result) => {
+          if (result.length > 0) {
+              res.send(true);
+          }else{
+              res.send(false);
+          }
+          console.log(result);
+      })
+      .catch((err) => {
+          res.send(err);
+      });
+});
 var port = 5000;
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

@@ -1,5 +1,4 @@
 import React from 'react';
-import cors from 'cors';
 import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 

@@ -1,11 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import cors from 'cors';
 
 //showone component => show divs contains result of searching
 class Showone extends React.Component {
   constructor(props) {
-    super(props);
+    super();
   }
 
   render() {
@@ -51,16 +50,18 @@ class Showone extends React.Component {
                         var b = element.volumeInfo.authors;
                         var c = element.volumeInfo.publishedDate;
                         var d = element.volumeInfo.imageLinks.smallThumbnail;
+                        var e = element.volumeInfo.infoLink;
                         const data = {
                           title: a,
                           author: b,
                           dateOfPublication: c,
                           img: d,
+                          link:e
                         };
                         console.log(data);
                         //add one element to favorite list
                         axios
-                          .post('http://localhost:5000/book/:Email', data)
+                          .post('http://localhost:5000/book', data)
                           .then((res) => {
                             console.log(res.data);
                           })
@@ -74,40 +75,11 @@ class Showone extends React.Component {
                     </button>
                     <br></br>{' '}
                   </div>
-                  <br />
-                  <div>
-                    {' '}
-                    <button
-                      class='zeren'
-                      onClick={() => {
-                        console.log(element.volumeInfo);
-                        var a = element.volumeInfo.title;
-                        var c = element.volumeInfo.publishedDate;
-                        var d = element.volumeInfo.imageLinks.smallThumbnail;
-                        const data = {
-                          title: a,
-                          dateOfPublication: c,
-                          img: d,
-                        };
-                        console.log(data);
-                        //add one element to read later list
-                        axios
-                          .post('http://localhost:5000/readbook', data)
-                          .then((res) => {
-                            console.log(res.data);
-                          })
-                          .catch((err) => {
-                            console.log(err);
-                          });
-                      }}
-                    >
-                      {' '}
-                      READ Later{' '}
-                    </button>
+                  
                     <br />
                     <hr />
                   </div>
-                </div>
+               
               );
             })}
         </div>

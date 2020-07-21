@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
-import cors from 'cors';
 
 //registeration page & switch to login page
 class Registration extends React.Component {

@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import cors from 'cors';
 import { Link, withRouter } from 'react-router-dom';
 
 //favorite list page => show all element that added to favorite
