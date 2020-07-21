@@ -25,7 +25,7 @@ class App2 extends React.Component {
         <Router>
           <Switch>
             <Route path='/auth/Search'>
-              <SearchBooks setUserAuth={this.setUserAuth} id='s' />
+            <SearchBooks handleSort={this.handleSort} handleSubmit={this.handleSubmit}  setUserAuth={this.setUserAuth} id='s' />
             </Route>
             <Route exact path='/auth/Fav'>
               <Falist setUserAuth={this.setUserAuth} />
