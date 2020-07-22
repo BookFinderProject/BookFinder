@@ -8,6 +8,7 @@ class Falist extends React.Component {
     super(props);
     this.state = {
       fav: [],
+      title:''
     };
   }
   //got all element from db
@@ -23,7 +24,11 @@ class Falist extends React.Component {
         console.log('Error', err);
       });
   }
-
+deleteHandel(i){
+  // i.preventDefault();
+	axios.delete(`http://localhost:5000/removeOne`)
+	.then(res => console.log(res.data));
+  }
   render() {
     return (
       <div id='zerinmidel'>
@@ -51,23 +56,15 @@ class Falist extends React.Component {
               </div>
               <br />
               <div>
-                <img src={element.img} alt='new' class='sora' />
-                <br />
-                <br />
-                <button
-                  onClick={() => {
-                    // delete one element from the favorite list
-                    axios
+              <a href={element.link} target="_blank" >
 
-                      .delete('http://localhost:5000/removeOne')
-                      .then((res) => {
-                        console.log('DELETED');
-                      })
-                      .catch((err) => {
-                        console.log(err);
-                      });
-                  }}
-                  class='zer'
+                <img src={element.img} alt='new' class='sora' />
+                </a>
+                <br />
+                <br />
+                <button         
+                  className='zer'
+                  onClick={this.deleteHandel.bind(this,index)}
                 >
                   {' '}
                   Remove{' '}

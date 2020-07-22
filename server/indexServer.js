@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + "/../public"));
 
 const reg = require("../database/register");
+const { Mongoose } = require("mongoose");
 let BooksModel = reg.BookModel;
 let RegModel = reg.RegModel;
 
@@ -20,11 +21,11 @@ let RegModel = reg.RegModel;
 
 /////ADD BOOK IN USER ////////////////////EDIT TO DO THAT
 app.post('/book',  (req, res) => { 
-  const { email, title, author, img ,link} = req.body;
+  const {title, dateOfPublication,author, img ,link,date} = req.body;
  
-  const bookDoc = new BooksModel({email, title, dateOfPublication,author, img ,link});
+  const bookDoc = new BooksModel({title, dateOfPublication,author, img ,link,date});
   bookDoc.save().then((response)=>{
-      res.send("created")
+      res.send("done")
   })
   .catch((err)=>{
       res.send(err)
@@ -32,10 +33,10 @@ app.post('/book',  (req, res) => {
   });
    
 //offer for me all the data in farovite -show the favorite  list
-app.get("/favorite/:email", (req, res) => {
+app.get("/favorite", (req, res) => {
   console.log(req)
-  var email = req.params.email;
-  BooksModel.find({email:email})
+  
+  BooksModel.find({})
     .then((result) => {
       res.send(result);
 
@@ -45,22 +46,20 @@ app.get("/favorite/:email", (req, res) => {
       res.send(err);
     });
 }); 
-
+// await,async
 ///Delete one Book
-app.delete('/removeOne',function(req,res){
-  BooksModel.find({})
-  .deleteOne({}).then((result)=>{
-    res.send("DeleteOne");
-  })
-  .catch((err)=>{
-    res.send(err)
-  })
+app.delete('/removeOne/:title',function(req,res){
+  BooksModel.remove({title:req.params.title},(err,deleteData)=>{
+   res.redirect('/favorite')
+ }).then(()=>{
+   res.send("Was removed")
+ })
 });
 
 //for all users infos/////DONE
 app.post('/register', (req, res) => {
-   const { FirstName, LastName, Email, Password } = req.body;
-   const regDocumentation = new RegModel({FirstName, LastName, Email, Password});
+   const { FirstName, LastName, Email, Password ,books} = req.body;
+   const regDocumentation = new RegModel({FirstName, LastName, Email, Password,books});
    RegModel.find({Email:req.body.Email})
    .then((user)=>{  
           regDocumentation.save()
@@ -93,7 +92,7 @@ app.get('/login/:Email/:Password', (req, res) => {
           }else{
               res.send(false);
           }
-          console.log(result);
+         
       })
       .catch((err) => {
           res.send(err);

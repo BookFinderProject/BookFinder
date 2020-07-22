@@ -10,14 +10,15 @@ mongoose
   });
 
   let booksSchema = mongoose.Schema({
-    email:{type:String},
+    // email:{type:String},
     title: { type: String },
     author:[{
-       type:String,
+      
+       type:String
    }],
     dateOfPublication: { type: String },
      img: { type: String },
-     link:{type:String},
+     link:{type:String,unique:true},
      date:{type:Date ,default:Date.now}
     
    });
@@ -26,7 +27,8 @@ const RegSchema = mongoose.Schema({
   FirstName: { type: String },
   LastName: { type: String },
   Email: { type: String, required: true, unique: true },
-  Password: { type: String ,required: true}
+  Password: { type: String ,required: true},
+  books : { type : Array , "default" : [] }
  
 });
 

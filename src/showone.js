@@ -18,7 +18,7 @@ class Showone extends React.Component {
                 //main div which show the result
                 <div key={index} id={`bigDiv-${index}`} class='big-div-item'>
                   <br></br>
-                  <div class='txt'>
+                  <div className='txt'>
                     Title: {element.volumeInfo.title}
                     <br />
                     Authors: {element.volumeInfo.authors}
@@ -34,11 +34,13 @@ class Showone extends React.Component {
                       rel='noopener noreferrer'
                       target='_blank'
                     >
+                      <a href={element.volumeInfo.infoLink} target="_blank" >
                       <img
                         src={element.volumeInfo.imageLinks.smallThumbnail}
-                        alt='new'
+                                                alt='new'
                         class='sora'
                       />
+                      </a>
                     </a>
                     <br />
                     <br />
@@ -51,6 +53,7 @@ class Showone extends React.Component {
                         var c = element.volumeInfo.publishedDate;
                         var d = element.volumeInfo.imageLinks.smallThumbnail;
                         var e = element.volumeInfo.infoLink;
+                      
                         const data = {
                           title: a,
                           author: b,
@@ -58,7 +61,6 @@ class Showone extends React.Component {
                           img: d,
                           link:e
                         };
-                        console.log(data);
                         //add one element to favorite list
                         axios
                           .post('http://localhost:5000/book', data)

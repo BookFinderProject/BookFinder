@@ -11,7 +11,7 @@ import {
 //switch between search page & favorite page and read later page
 class App2 extends React.Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = {
       isAuthenticated: false,
     };
