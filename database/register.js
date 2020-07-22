@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-<<<<<<< HEAD
 mongoose
   .connect('mongodb://localhost:27017/booksDB', { useNewUrlParser: true })
   .then(() => {
@@ -24,18 +23,6 @@ mongoose
     
    });
     
-=======
-var MONGODB_URI ="mongodb+srv://djayyab:doaa123@cluster0.sbk85.mongodb.net/booksDB" 
-
-const db = mongoose.connect(MONGODB_URI ||'mongodb://localhost/booksDB', { useUnifiedTopology: true, useNewUrlParser: true }).then(()=>{
-    console.log("connected!")
-})
-.catch((err)=>{
-    
-  console.log("Error while connecting to DB",err);
-})
-
->>>>>>> fbaa613cb3588e4413ef93584e2d743bcf8f4b9b
 const RegSchema = mongoose.Schema({
   FirstName: { type: String },
   LastName: { type: String },
