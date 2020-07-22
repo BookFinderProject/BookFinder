@@ -1,115 +1,83 @@
 const express = require("express");
 let app = express();
-
 const cors = require("cors");
-
 var bodyParser = require("body-parser");
-//const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+const bcrypt = require("bcrypt");
 app.use(cors());
+process.env.SECRET_KEY ='secret';
 
-
+//
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/../public"));
 
-const db = require("../database");
-const read = require("../database/read");
-const log = require("../database/login.js");
 const reg = require("../database/register");
-let BooksModel = db.BooksModel;
-let loginModel = log.loginModel;
+const { Mongoose } = require("mongoose");
+let BooksModel = reg.BookModel;
 let RegModel = reg.RegModel;
-let ReadModel = read.ReadModel;
 
 //take the data of the book that i seach about it and put in favorit list
-app.post("/book", (req, res) => { 
-  const { title, author, dateOfPublication , img} = req.body;
-  
-  let bookDocumentation = new BooksModel({
-    title,
-    author,
-    dateOfPublication,
-    img,
-  });
-  bookDocumentation
-    .save()
-    .then(() => res.status(201).send("saved"))
-    .catch((err) => res.status(500).send(err + "err"));
-});
 
+/////ADD BOOK IN USER ////////////////////EDIT TO DO THAT
+app.post('/book',  (req, res) => { 
+  const {title, dateOfPublication,author, img ,link,date} = req.body;
+ 
+  const bookDoc = new BooksModel({title, dateOfPublication,author, img ,link,date});
+  bookDoc.save().then((response)=>{
+      res.send("done")
+  })
+  .catch((err)=>{
+      res.send(err)
+  })
+  });
+   
 //offer for me all the data in farovite -show the favorite  list
 app.get("/favorite", (req, res) => {
+  console.log(req)
+  
   BooksModel.find({})
     .then((result) => {
       res.send(result);
+
       console.log(result);
     })
     .catch((err) => {
       res.send(err);
     });
 }); 
-
-//add to readlater lit
-app.post("/readbook", (req, res) => { 
-
-  const { title, dateOfPublication , img } = req.body;
-  
-  let readDoc = new ReadModel({
-    title,
-    dateOfPublication,
-    img,
-  });
- readDoc
-    .save()
-    .then(() => res.status(201).send("saved"))
-    .catch((err) => res.status(500).send(err + "err"));
+// await,async
+///Delete one Book
+app.delete('/removeOne/:title',function(req,res){
+  BooksModel.remove({title:req.params.title},(err,deleteData)=>{
+   res.redirect('/favorite')
+ }).then(()=>{
+   res.send("Was removed")
+ })
 });
 
-//offer the read list 
-app.get("/readlater", (req, res) => {
-  ReadModel.find({})
-    .then((result) => {
-      res.send(result);
-      console.log(result);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
-});
-
-// it inside favorite list through it i can delete whet i'm saved inside the list
-app.delete('/removeOne',function(req,res){
-  BooksModel.find({})
-  .deleteOne({}).then((result)=>{
-    res.send("DeleteOne");
-  })
-  .catch((err)=>{
-    res.send(err)
-  })
-});
-app.delete('/removeread',function(req,res){
-  ReadModel.find({})
-  .deleteOne({}).then((result)=>{
-    res.send("DeleteOne");
-  })
-  .catch((err)=>{
-    res.send(err)
-  })
-});
-
-
-//for all users infos
+//for all users infos/////DONE
 app.post('/register', (req, res) => {
+   const { FirstName, LastName, Email, Password ,books} = req.body;
+   const regDocumentation = new RegModel({FirstName, LastName, Email, Password,books});
+   RegModel.find({Email:req.body.Email})
+   .then((user)=>{  
+          regDocumentation.save()
+      .then(()=>{
+        res.send("created")
+      })
+      .catch((err)=>{
+        console.log("Erorr",err);
+      })
+     })
+    
 
-  const { FirstName, LastName, Email, Password } = req.body;
-  let regDocumentation = new RegModel({ FirstName, LastName, Email, Password });
-
-  regDocumentation.save().then(() =>
-      res.status(201).send("created"))
-      .catch((err) => res.status(500).send(err + "err"))
+    .catch((err)=>{
+      console.log("Data Erorr");
+    })
 });
 
-//take from regster and give me the ability to sign to main screen
+///////////////////////////Done//////////
 app.get('/login/:Email/:Password', (req, res) => {
 
   const { Email, Password } = req.params;
@@ -124,7 +92,7 @@ app.get('/login/:Email/:Password', (req, res) => {
           }else{
               res.send(false);
           }
-          console.log(result);
+         
       })
       .catch((err) => {
           res.send(err);

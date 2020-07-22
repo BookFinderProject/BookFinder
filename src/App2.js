@@ -6,14 +6,12 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
 } from 'react-router-dom';
-import Readlater from './readlater.js';
 
 //switch between search page & favorite page and read later page
 class App2 extends React.Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = {
       isAuthenticated: false,
     };
@@ -29,11 +27,8 @@ class App2 extends React.Component {
             </Route>
             <Route exact path='/auth/Fav'>
               <Falist setUserAuth={this.setUserAuth} />
-            </Route>
-            <Route exact path='/auth/read'>
-              <Readlater setUserAuth={this.setUserAuth} />
-            </Route>
-          </Switch>
+            </Route>        
+            </Switch>
         </Router>
       </div>
     );

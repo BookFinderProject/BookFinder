@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
-import cors from 'cors';
 
 //registeration page & switch to login page
 class Registration extends React.Component {
@@ -25,7 +24,10 @@ class Registration extends React.Component {
   // save the information in db
   handleSubmit(event) {
     const { FirstName, LastName, Email, Password } = this.state;
-
+    if(this.state.Password.length < 7){
+      alert('Your Password is not Strong!')
+    }
+    else{
     axios
       .post(`http://localhost:5000/register`, {
         FirstName,
@@ -39,15 +41,22 @@ class Registration extends React.Component {
           this.props.setUserAuth(true);
           this.props.history.push('/auth/login');
         }
-        alert('NOW LOGIN TO CONFIRM YOUR  ACCOUNT');
+        // alert('NOW LOGIN TO CONFIRM YOUR  ACCOUNT');
+        else {
+          alert("The Username is existe ")
+        }
+         
+
+        
       })
       .catch((error) => {
         console.log('registration error', error);
         this.props.setUserAuth(false);
       });
+    }
     event.preventDefault();
+  
   }
-
   render() {
     return (
       <div class='loginform'>
