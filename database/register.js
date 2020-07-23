@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+<<<<<<< HEAD
 var MONGODB_URI ="mongodb+srv://djayyab:doaa123@cluster0.sbk85.mongodb.net/booksDB" 
 
 const db = mongoose.connect(MONGODB_URI ||'mongodb://localhost/booksDB', { useUnifiedTopology: true, useNewUrlParser: true }).then(()=>{
@@ -10,6 +11,16 @@ const db = mongoose.connect(MONGODB_URI ||'mongodb://localhost/booksDB', { useUn
   console.log("Error while connecting to DB",err);
 })
 
+=======
+mongoose
+  .connect('mongodb://localhost:27017/booksDB', { useNewUrlParser: true })
+  .then(() => {
+    console.log(' The connecting is good :) ');
+  })
+  .catch(err => {
+    console.log(' Err when conecting To DataBase :( ', err);
+  });
+>>>>>>> a3d723316a17f360af5fe6bd097de512c6c499c3
 
   let booksSchema = mongoose.Schema({
     // email:{type:String},
@@ -25,7 +36,10 @@ const db = mongoose.connect(MONGODB_URI ||'mongodb://localhost/booksDB', { useUn
     
    });
     
+<<<<<<< HEAD
 
+=======
+>>>>>>> a3d723316a17f360af5fe6bd097de512c6c499c3
 const RegSchema = mongoose.Schema({
   FirstName: { type: String },
   LastName: { type: String },
