@@ -16,6 +16,13 @@ class App2 extends React.Component {
       isAuthenticated: false,
     };
   }
+
+  logOut(e) {
+    e.preventDefault()
+    localStorage.removeItem('usertoken')
+    this.props.history.push(`/`)
+  }
+  
   setUserAuth = (value) => this.setState({ isAuthenticated: value });
   render() {
     return (

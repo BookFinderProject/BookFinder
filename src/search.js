@@ -44,6 +44,12 @@ class SearchBooks extends React.Component {
   clearText() {
     this.setState({ input: '' });
   }
+  
+  logOut(e) {
+    e.preventDefault()
+    localStorage.removeItem('usertoken')
+    this.props.history.push(`/`)
+  }
 
   render() {
     return (
@@ -56,6 +62,11 @@ class SearchBooks extends React.Component {
           <Link to='/auth/Fav' class='right'>
             <button class='zer'> Favorite </button>
           </Link>
+
+          <button id ="my-button" class='zer'><a href="auth/login" onClick={this.logOut.bind(this)} >
+            Logout
+            </a></button>
+
            </div>
 
         <div class='buttonIn'>

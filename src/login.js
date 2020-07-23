@@ -77,6 +77,20 @@ class Login extends React.Component {
           <button type='submit' class='butooon'>
             Login
           </button>
+               {/* {this.state.isSignedIn ? (
+          <span>
+            <div>Signed In!</div>
+            <button onClick={() => firebase.auth().signOut()}>Sign out!</button>
+            <h1>Welcome {firebase.auth().currentUser.displayName}</h1>
+            />
+          </span>
+        ) : (
+          <StyledFirebaseAuth
+            uiConfig={this.uiConfig}
+            firebaseAuth={firebase.auth()}
+          />
+        )} */}
+
           <hr />
           <p>
             Dont have an account ? <Link to='/auth/reg'> Sgin up</Link>{' '}

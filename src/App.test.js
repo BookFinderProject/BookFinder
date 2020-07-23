@@ -3,12 +3,75 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import Showone from './showone';
 import App from './App';
+import search from './search.js';
 import { shallow } from 'enzyme';
 import { mount } from 'enzyme';
 
+
+import login from './login';
+
 it('renders my app component', () => {
   shallow(<App />);
+  
 });
+
+// it('renders my app component', () => {
+//   shallow(<search />);
+//   const wrapper = shallow(<search />);
+//       const logoutBtn = wrapper.find('button');
+//       logoutBtn.simulate('click');
+// });
+
+
+
+
+describe('App component', () => {
+
+  it('we found the search component' , () => {
+    const wrapper = shallow(<search />);
+    
+
+    // const logoutBtn = component.find('button#my-button');
+    // expect(logoutBtn.length).toBe("1")
+    
+//       logoutBtn.simulate('click');
+
+    // const wrapper = component.find('.zer');
+    // expect(wrapper.length).toBe(1)
+    // Btn.simulate('click');
+   
+  });
+});
+
+describe('App component', () => {
+
+  it('we found the logout component' , () => {
+    const wrapper = shallow(<search />);
+    expect(wrapper.contains(<logout/>))
+
+
+   
+  });
+});
+
+const clickFn = jest.fn();
+describe('logout function', () => {
+  it('button click should logout', () => {
+    const component = shallow(<search onClick={clickFn} />);
+    component
+      .find('button#my-button')
+      .simulate('click');
+    expect({clickFn}).toHaveBeenCalled();
+  });
+});
+
+
+// it('renders welcome message', () => {
+//   const wrapper = shallow(<App />);
+//   const welcome =  <div className='app'></div> ;
+//   // expect(wrapper.contains(welcome)).toBe(true);
+//   expect(wrapper.contains(welcome)).toEqual(true);
+// });
 
 test('snapshot renders', () => {
   const component = renderer.create(<App />);
@@ -60,3 +123,4 @@ it('fetches async data', () => {
     expect(wrapper.find('.big-div-item').length).toEqual(3);
   });
 });
+

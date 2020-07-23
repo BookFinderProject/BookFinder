@@ -1,3 +1,7 @@
+// var firebase = require('firebase');
+// var firebaseui = require('firebaseui');
+
+
 import React from 'react';
 import './App.css';
 import Registration from './registration.js';
@@ -15,7 +19,36 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+      // state = { isSignedIn: false },
+      // uiConfig = {
+      //   signInFlow: "popup",
+      //   signInOptions: [
+      //     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      //     firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      //     firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+      //     firebase.auth.GithubAuthProvider.PROVIDER_ID,
+      //     firebase.auth.EmailAuthProvider.PROVIDER_ID
+      //   ],
+      //   callbacks: {
+      //     signInSuccess: () => false
+      //   }
+      //   }
   }
+
+  // firebase.initializeApp({
+//   apiKey: "AIzaSyD12LvGcK23KrrdP1clagb8kcACa4DvJJ0",
+//   authDomain: "finderbook-6c644.firebaseapp.com"
+// })
+
+
+ // componentDidMount = () => {
+  //   firebase.auth().onAuthStateChanged(user => {
+  //     this.setState({ isSignedIn: !!user })
+  //     console.log("user", user)
+  //   })
+  // }
+
+
   //Authuntocation
   setUserAuth = (value) => this.setState({ isAuthenticated: true });
   //switch between login page & register page & App2 page
